@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: black;
+            font-family: "Wingdings", sans-serif;
+            color: white;
+            font-size: x-large;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            overflow: hidden;
+            animation: trembling 0.5s infinite;
+        }
+
+        .typing {
+            padding: 0 10px;
+            margin: 0;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            text-align: center;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @keyframes trembling {
+            0% {
+                transform: translate(0px, 0px);
+            }
+
+            10% {
+                transform: translate(-1px, 1px);
+            }
+
+            20% {
+                transform: translate(-1px, -1px);
+            }
+
+            30% {
+                transform: translate(1px, 1px);
+            }
+
+            40% {
+                transform: translate(1px, -1px);
+            }
+
+            50% {
+                transform: translate(-1px, 1px);
+            }
+
+            60% {
+                transform: translate(-1px, -1px);
+            }
+
+            70% {
+                transform: translate(1px, 1px);
+            }
+
+            80% {
+                transform: translate(1px, -1px);
+            }
+
+            90% {
+                transform: translate(-1px, 1px);
+            }
+
+            100% {
+                transform: translate(-1px, -1px);
+            }
+        }
+
+        .trembling {
+            display: inline-block;
+            animation: trembling 0.5s infinite;
+        }
+
+        #playButton {
+            font-size: xx-large;
+            color: white;
+            background-color: black;
+            border: 2px solid white;
+            padding: 20px 40px;
+            cursor: pointer;
+        }
+
+        #playButtonContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                font-size: medium;
+                justify-content: flex-start;
+                animation: none;
+                padding: 10px;
+            }
+
+            .typing {
+                font-size: medium;
+                white-space: normal;
+                max-height: 70vh;
+                overflow-y: auto;
+            }
+
+            #playButton {
+                font-size: large;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="backgroundMusic" loop></audio>
+    <div id="playButtonContainer">
+        <button id="playButton" onclick="startTypingEffect()">PLAY</button>
+    </div>
+    <h1 id="typingEffect" class="typing"></h1>
+    <script>
+        function startTypingEffect() {
+            document.getElementById("playButtonContainer").style.display = "none";
+            document.getElementById("backgroundMusic").play();
+
+            function typeEffect(element, text, speed = 150) {
+                let i = 0;
+                element.innerHTML = "";
+
+                const audioFiles = [
+                    'voice_gaster_1.wav',
+                    'voice_gaster_2.wav',
+                    'voice_gaster_3.wav',
+                    'voice_gaster_4.wav',
+                    'voice_gaster_5.wav',
+                    'voice_gaster_6.wav',
+                    'voice_gaster_7.wav'
+                ];
+
+                function typing() {
+                    if (i < text.length) {
+                        const randomAudioIndex = Math.floor(Math.random() * audioFiles.length);
+                        const typingAudio = new Audio(audioFiles[randomAudioIndex]);
+
+                        const isLetter = /[A-Za-z]/.test(text.charAt(i));
+
+                        if (isLetter) {
+                            typingAudio.play();
+                        }
+
+                        if (text.charAt(i) === '.' || text.charAt(i) === '!' || text.charAt(i) === '?') {
+                            element.innerHTML += text.charAt(i) + (i < text.length - 1 ? '<br><br>' : '');
+                        } else {
+                            element.innerHTML += text.charAt(i);
+                        }
+                        i++;
+                        setTimeout(typing, speed);
+                    }
+                }
+
+                typing();
+            }
+
+            const altText = `ARE YOU THERE?
+ARE WE CONNECTED?
+EXCELLENT.
+TRULY EXCELLENT.
+I AM AFRAID THAT THIS EXPERIMENT IS NOT COMPLETED YET.
+PLEASE, PARDON ME.
+BUT.
+THERE'S SOMETHING YOU COULD HELP ME WITH.
+I THINK YOU WILL SURE FIND IT.
+VERY.
+VERY.
+INTERESTING.
+(please, enter this page on a Windows device)`;
+
+            const text = `ENTRY NUMBER SEVENTEEN.
+DARK DARKER YET DARKER.
+THE DARKNESS KEEPS GROWING.
+THE SHADOWS CUTTING DEEPER.
+PHOTON READINGS NEGATIVE.
+THIS NEXT EXPERIMENT.
+SEEMS.
+VERY.
+VERY.
+INTERESTING.
+WHAT DO YOU TWO THINK?`;
+
+            const element = document.getElementById("typingEffect");
+
+            if (navigator.platform == "Win32") {
+                typeEffect(element, text, 120);
+            } else {
+                typeEffect(element, altText, 120);
+            }
+        }
+
+        window.onload = function () {
+            const audioElement = document.getElementById("backgroundMusic");
+            if (navigator.platform == "Win32") {
+                audioElement.src = "mus_smile.wav";
+            } else {
+                audioElement.src = "AUDIO_ANOTHERHIM.wav";
+            }
+        }
+    </script>
+    <script>
+        document.title = "[REDACTED]";
+    </script>
+</body>
+
+</html>
